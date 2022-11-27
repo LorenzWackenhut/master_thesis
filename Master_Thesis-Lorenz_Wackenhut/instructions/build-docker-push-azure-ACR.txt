@@ -1,0 +1,17 @@
+# delete old image
+docker image rm REDACTED.azurecr.io/spark-python:v1
+
+# build new image
+docker build -t REDACTED.azurecr.io/spark-python:v1 -f /opt/spark/kubernetes/dockerfiles/spark/bindings/python/Dockerfile .
+
+# signin to azure
+az acr login --name REDACTED.azurecr.io
+
+# push to acr
+docker push REDACTED.azurecr.io/spark-python:v1
+
+# switch to aksuser
+su aksuser
+REDACTED
+
+

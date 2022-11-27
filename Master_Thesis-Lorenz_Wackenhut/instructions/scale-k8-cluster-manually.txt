@@ -1,0 +1,27 @@
+# inference data test
+measurment data logs/adls/lorenz_master
+
+1. Delete AKS cluster in Web UI
+
+2. Set environement variables
+
+3. Create cluster with aksuser:
+terraform init
+terraform plan
+terraform apply
+
+4. Update kubeconfig:
+az aks get-credentials --resource-group REDACTED --name REDACTED
+
+5. Copy kubeconfig to lorenz.wackenhut
+
+6. Create spark service account
+kubectl create serviceaccount spark
+kubectl create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default
+
+7. Run Spark job
+
+8. Scale cluster with Azure cli
+az aks show --resource-group REDACTED --name REDACTED --query agentPoolProfiles
+az aks scale --resource-group REDACTED --name REDACTED --node-count 2 --nodepool-name agentpool
+az aks update --resource-group REDACTED  --name REDACTED  --disable-cluster-autoscaler

@@ -1,0 +1,34 @@
+ARG base_img=spark-base:latest
+
+FROM $base_img
+WORKDIR /
+
+# Reset to root to run installation tasks
+USER 0
+
+RUN mkdir ${SPARK_HOME}/python
+RUN mkdir /root/.ivy2
+# RUN mkdir /py_files
+RUN apt-get update && \
+    apt install -y python3 python3-pip && \
+    pip3 install --upgrade pip setuptools && \ 
+    pip3 install numpy pytz pyyaml && \
+    # Removed the .cache to save space
+    rm -r /root/.cache && rm -rf /var/cache/apt/*
+
+COPY python/pyspark ${SPARK_HOME}/python/pyspark
+COPY python/lib ${SPARK_HOME}/python/lib
+COPY .ivy2 /root/.ivy2
+# COPY /python/py_files /py_files
+# COPY /python/py_files /opt/spark/work-dir/py_files
+# RUN chmod -R 777 /opt/spark/work-dir/py_files
+
+WORKDIR /opt/spark/work-dir
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
+# ENTRYPOINT [ "/bin/sh" ]
+
+# Specify the User that the actual main process will run as
+# ARG spark_uid=8262567
+# ARG spark_uid=185
+ARG spark_uid=0
+USER ${spark_uid}

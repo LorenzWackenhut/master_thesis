@@ -1,0 +1,72 @@
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  --deploy-mode client \
+  --name spark-python \
+  --conf spark.driver.memory=4g \
+  --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+  --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=5S/FS3ZJpxmiu8CzAVWCyKnFhK0tymvu3thvsvvUqUvkaP2w75skbLHMkzHpycSB35wo4Tf26v1rjiYTEmV9Gw== \
+  --files /home/lorenz.wackenhut/master_thesis/Pipeline/src/configuration/config_extraction_prediction.yml \
+  /home/lorenz.wackenhut/master_thesis/Pipeline/src/main_airflow.py
+
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  --deploy-mode client \
+  --name spark-python \
+  --conf spark.driver.memory=4g \
+  --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+  --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=5S/FS3ZJpxmiu8CzAVWCyKnFhK0tymvu3thvsvvUqUvkaP2w75skbLHMkzHpycSB35wo4Tf26v1rjiYTEmV9Gw== \
+  /home/lorenz.wackenhut/master_thesis/spark/notebooks/model_evaluation.py
+
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  --deploy-mode client \
+  --name spark-python \
+  --conf spark.driver.memory=4g \
+  --files /home/lorenz.wackenhut/master_thesis/Pipeline/src/configuration/config_training_random_forest.yml \
+  /home/lorenz.wackenhut/master_thesis/Pipeline/src/main_airflow.py
+
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  --deploy-mode client \
+  --name spark-python \
+  --conf spark.driver.memory=4g \
+  --files /home/lorenz.wackenhut/master_thesis/Pipeline/src/configuration/config_processing_training.yml \
+  /home/lorenz.wackenhut/master_thesis/Pipeline/src/main_airflow.py
+
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  --deploy-mode client \
+  --name spark-python \
+  --conf spark.driver.memory=4g \
+  --files /home/lorenz.wackenhut/master_thesis/Pipeline/src/configuration/config_evaluator_rfc_gbt.yml \
+  /home/lorenz.wackenhut/master_thesis/Pipeline/src/main_airflow.py
+
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  --deploy-mode client \
+  --name spark-python \
+  --conf spark.driver.memory=4g \
+  --files /home/lorenz.wackenhut/master_thesis/Pipeline/src/configuration/config_training_random_forest_hyper.yml \
+  /home/lorenz.wackenhut/master_thesis/Pipeline/src/main_airflow.py
+
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  --deploy-mode client \
+  --name spark-python \
+  --conf spark.driver.memory=4g \
+  --files /home/lorenz.wackenhut/master_thesis/Pipeline/src/configuration/config_evaluator_rfc_gbt.yml \
+  /home/lorenz.wackenhut/master_thesis/Pipeline/src/main_airflow.py
+
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  --deploy-mode client \
+  --name spark-python \
+  --conf spark.driver.memory=4g \
+  --files /home/lorenz.wackenhut/master_thesis/Pipeline/src/configuration/config_evaluator_rfc_gbt.yml \
+  /home/lorenz.wackenhut/master_thesis/Pipeline/src/main_training_gbt.py
+
+data
+REDACTED
+/model/rfc_model_2
+abfss://data@REDACTED.dfs.core.windows.net/model/rfc_model_2
+

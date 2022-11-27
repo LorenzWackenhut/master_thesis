@@ -1,0 +1,13 @@
+export AIRFLOW_HOME=/home/lorenz.wackenhut/airflow
+
+export SPARK_HOME=/opt/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+alias spark-shell=$SPARK_HOME/bin/pyspark
+export PYTHONPATH=$SPARK_HOME/python/:$PYTHONPATH
+export export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.10.9-src.zip:$PYTHONPATH
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_HOME=/opt/hadoop
+export PATH=${HADOOP_HOME}/bin:${PATH}
+export SPARK_DIST_CLASSPATH=$(hadoop classpath):/opt/hadoop/share/hadoop/tools/lib/*
+export PATH=${SPARK_HOME}/bin:${PATH}

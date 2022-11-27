@@ -1,0 +1,24 @@
+1. Start minikube with enough ram and cpu
+
+2. Alias "docker" for minikube
+eval $(minikube docker-env)
+
+3. Build docker image
+
+4. Mount Volume in minikube
+minikube mount /home/lorenz.wackenhut/master_thesis/spark/Docker/job:/job
+
+5. Spark submit
+$SPARK_HOME/bin/spark-submit \
+  --master k8s://REDACTED:8443 \
+  --deploy-mode cluster \
+  --name spark-python \
+  --conf spark.executor.instances=2 \
+  --conf spark.kubernetes.namespace=spark \
+  --conf spark.kubernetes.container.image=spark-python:latest \
+  --conf spark.kubernetes.executor.volumes.hostPath.test.mount.path=/job \
+  --conf spark.kubernetes.executor.volumes.hostPath.test.options.path=/job \
+  --conf spark.kubernetes.driver.volumes.hostPath.test.mount.path=/job \
+  --conf spark.kubernetes.driver.volumes.hostPath.test.options.path=/job \
+  --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark-serviceaccount \
+ local:///job/count_test.py

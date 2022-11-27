@@ -1,0 +1,67 @@
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-c6fb7fe3.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name spark-pi \
+    --conf spark.kubernetes.file.upload.path=file:///tmp \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=3 \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.kubernetes.container.image=REDACTED.azurecr.io/spark-python:v1\
+    local:////opt/spark/examples/src/main/python/pi.py
+
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-c6fb7fe3.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name spark-pi \
+    --conf spark.kubernetes.file.upload.path=file:///tmp \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=2 \
+    --conf spark.kubernetes.container.image=REDACTED.azurecr.io/spark-python:v1 \
+    --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+    --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=REDACTED \
+    --py-files abfss://data@REDACTED.dfs.core.windows.net/py-files/ml_pipeline-0.0.1-py3.8.egg \
+    abfss://data@REDACTED.dfs.core.windows.net/py-files/main_kubernetes.py
+
+    --conf fs.azure.account.name.dfs.core.windows.net=REDACTED \
+    --conf fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+    --conf fs.azure.account.key.REDACTED.dfs.core.windows.net=REDACTED \
+
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-c6fb7fe3.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name spark-pi \
+    --class org.apache.spark.examples.SparkPi \
+    --conf spark.kubernetes.file.upload.path=file:///tmp \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=3 \
+    --conf spark.kubernetes.container.image=REDACTED.azurecr.io/spark-python:v1\
+    --py-files https://REDACTED.blob.core.windows.net/jars/ml_pipeline-0.0.1-py3.8.egg \
+    https://REDACTED.blob.core.windows.net/jars/main_kubernetes.py
+
+
+
+
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-c6fb7fe3.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name spark-pi \
+    --conf spark.kubernetes.file.upload.path=file:///tmp \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=3 \
+    --conf spark.kubernetes.container.image=REDACTED.azurecr.io/spark-python:v1 \
+    --files local:///opt/spark/work-dir/py_files/config/config_extraction_prediction.yml \
+    --py-files local:///opt/spark/work-dir/py_files/src/ml_pipeline-0.0.1-py3.8.egg \
+    local:///opt/spark/work-dir/py_files/src/main_kubernetes.py
+
+kubectl get event --namespace default --field-selector involvedObject.name=spark-pi-4a0a8a798e7b4b93-driver
+kubectl logs spark-pi-4a0a8a798e7b4b93-driver
+
+
+pyspark \
+    --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+    --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=REDACTED \
+
+df = spark.read.parquet("abfss://data@REDACTED.dfs.core.windows.net/masterdata/df_qb_file")
+df.count()
+
+/opt/spark/kubernetes/dockerfiles/spark/bindings/python

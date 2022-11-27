@@ -1,0 +1,106 @@
+# training_gbt
+# 3 core
+
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-76dd6b3a.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name ml-pipeline \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=24 \
+    --conf spark.executor.cores=3 \
+    --conf spark.executor.memory=8g \
+    --conf spark.driver.cores=3 \
+    --conf spark.driver.memory=8g \
+    --proxy-user root \
+    --conf spark.kubernetes.container.image=05nclorenzacr.azurecr.io/spark-python:ivy2 \
+    --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+    --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=5S/FS3ZJpxmiu8CzAVWCyKnFhK0tymvu3thvsvvUqUvkaP2w75skbLHMkzHpycSB35wo4Tf26v1rjiYTEmV9Gw== \
+    --files "abfss://py-files@REDACTED.dfs.core.windows.net/configuration/config_training_gradient_boosted_trees_hyper.yml" \
+    --py-files "abfss://py-files@REDACTED.dfs.core.windows.net/jobs.zip" \
+    "abfss://py-files@REDACTED.dfs.core.windows.net/main_training_gbt.py"
+
+# training_gbt
+# 5 core
+
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-c07975b3.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name ml-pipeline \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=2 \
+    --conf spark.executor.cores=5 \
+    --conf spark.executor.memory=13g \
+    --conf spark.driver.cores=5 \
+    --conf spark.driver.memory=13g \
+    --proxy-user root \
+    --conf spark.kubernetes.container.image=05nclorenzacr.azurecr.io/spark-python:ivy2 \
+    --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+    --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=5S/FS3ZJpxmiu8CzAVWCyKnFhK0tymvu3thvsvvUqUvkaP2w75skbLHMkzHpycSB35wo4Tf26v1rjiYTEmV9Gw== \
+    --files "abfss://py-files@REDACTED.dfs.core.windows.net/configuration/config_training_gradient_boosted_trees_hyper.yml" \
+    --py-files "abfss://py-files@REDACTED.dfs.core.windows.net/jobs.zip" \
+    "abfss://py-files@REDACTED.dfs.core.windows.net/main_training_gbt_hyper.py"
+
+
+# prediction_gbt
+# 3 core
+
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-76dd6b3a.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name ml-pipeline \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=9 \
+    --conf spark.executor.cores=3 \
+    --conf spark.executor.memory=8g \
+    --conf spark.driver.cores=3 \
+    --conf spark.driver.memory=8g \
+    --proxy-user root \
+    --conf spark.kubernetes.container.image=05nclorenzacr.azurecr.io/spark-python:ivy2 \
+    --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+    --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=5S/FS3ZJpxmiu8CzAVWCyKnFhK0tymvu3thvsvvUqUvkaP2w75skbLHMkzHpycSB35wo4Tf26v1rjiYTEmV9Gw== \
+    --files "abfss://py-files@REDACTED.dfs.core.windows.net/configuration/config_prediction.yml" \
+    --py-files "abfss://py-files@REDACTED.dfs.core.windows.net/jobs.zip" \
+    "abfss://py-files@REDACTED.dfs.core.windows.net/main_prediction_gbt.py"
+
+
+# prediction_gbt
+# 5 core
+
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-c07975b3.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name ml-pipeline \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=2 \
+    --conf spark.executor.cores=5 \
+    --conf spark.executor.memory=13g \
+    --conf spark.driver.cores=5 \
+    --conf spark.driver.memory=13g \
+    --proxy-user root \
+    --conf spark.kubernetes.container.image=05nclorenzacr.azurecr.io/spark-python:ivy2 \
+    --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+    --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=5S/FS3ZJpxmiu8CzAVWCyKnFhK0tymvu3thvsvvUqUvkaP2w75skbLHMkzHpycSB35wo4Tf26v1rjiYTEmV9Gw== \
+    --files "abfss://py-files@REDACTED.dfs.core.windows.net/configuration/config_prediction.yml" \
+    --py-files "abfss://py-files@REDACTED.dfs.core.windows.net/jobs.zip" \
+    "abfss://py-files@REDACTED.dfs.core.windows.net/main_prediction_gbt.py"
+
+# presentation
+# 1 node
+
+$SPARK_HOME/bin/spark-submit \
+    --master k8s://https://dns-REDACTED-5fef339b.hcp.westeurope.azmk8s.io:443 \
+    --deploy-mode cluster \
+    --name ml-pipeline \
+    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+    --conf spark.executor.instances=4 \
+    --conf spark.executor.cores=3 \
+    --conf spark.executor.memory=8g \
+    --conf spark.driver.cores=3 \
+    --conf spark.driver.memory=8g \
+    --proxy-user root \
+    --conf spark.kubernetes.container.image=05nclorenzacr.azurecr.io/spark-python:ivy2 \
+    --conf spark.hadoop.fs.azure.account.auth.type.REDACTED.dfs.core.windows.net=SharedKey \
+    --conf spark.hadoop.fs.azure.account.key.REDACTED.dfs.core.windows.net=5S/FS3ZJpxmiu8CzAVWCyKnFhK0tymvu3thvsvvUqUvkaP2w75skbLHMkzHpycSB35wo4Tf26v1rjiYTEmV9Gw== \
+    --files "abfss://py-files@REDACTED.dfs.core.windows.net/configuration/config_extraction_prediction.yml" \
+    --py-files "abfss://py-files@REDACTED.dfs.core.windows.net/jobs.zip" \
+    "abfss://py-files@REDACTED.dfs.core.windows.net/main_kubernetes.py"

@@ -1,0 +1,19 @@
+1. move to directory
+/opt/spark/conf/spark-defaults.conf
+
+2. stop history server
+sudo $SPARK_HOME/sbin/stop-history-server.sh
+
+3. change values to local file
+
+4 start history server
+sudo $SPARK_HOME/sbin/start-history-server.sh
+
+5. change values to adls
+
+6. submit job
+
+7. copy file from adls to local directory
+
+8. portforwarding
+18080

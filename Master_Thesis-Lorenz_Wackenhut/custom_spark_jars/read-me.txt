@@ -1,0 +1,1 @@
+These jars have to be included into the dockerfile for Spark to connect to the ADLS
